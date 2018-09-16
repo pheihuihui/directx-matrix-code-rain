@@ -25,6 +25,7 @@ public:
 	virtual void Initialize(_In_ Windows::ApplicationModel::Core::CoreApplicationView^ applicationView);
 	virtual void SetWindow(_In_ Windows::UI::Core::CoreWindow^ window);
 	virtual void Load(_In_ Platform::String^ entryPoint);
+	virtual void Update();
 	virtual void Run();
 	virtual void Uninitialize();
 
@@ -71,10 +72,15 @@ private:
 	);
 
 	Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>                    m_blackBrush;
+	Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>                    m_greenBrush;
 	Microsoft::WRL::ComPtr<IDWriteTextFormat>                       m_textFormat;
 	Microsoft::WRL::ComPtr<IDWriteTypography>                       m_textTypography;
 	Microsoft::WRL::ComPtr<IDWriteTextLayout>                       m_textLayout;
 	SampleOverlay^													m_sampleOverlay;
+	bool															m_windowClosed;
+	bool															m_windowVisible;
+	UINT32															m_sampleText;
+	DX::StepTimer													m_timer;
 };
 
 

@@ -25,34 +25,37 @@ IFrameworkView^ Direct3DApplicationSource::CreateView() {
 	return ref new App();
 }
 
-App::App() {}
+App::App() :
+	m_windowClosed(false),
+	m_windowVisible(true),
+	m_sampleText(1000) {}
 
 void App::CreateDeviceIndependentResources() {
 	DirectXBase::CreateDeviceIndependentResources();
 
-	// Create a DirectWrite text format object.
-	//DX::ThrowIfFailed(
-	m_dwriteFactory->CreateTextFormat(
-		L"Gabriola",
-		nullptr,
-		DWRITE_FONT_WEIGHT_REGULAR,
-		DWRITE_FONT_STYLE_NORMAL,
-		DWRITE_FONT_STRETCH_NORMAL,
-		64.0f,
-		L"en-US", // locale
-		&m_textFormat
+	//Create a DirectWrite text format object.
+	DX::ThrowIfFailed(
+		m_dwriteFactory->CreateTextFormat(
+			L"Malgun Gothic",
+			nullptr,
+			DWRITE_FONT_WEIGHT_REGULAR,
+			DWRITE_FONT_STYLE_NORMAL,
+			DWRITE_FONT_STRETCH_NORMAL,
+			64.0f,
+			L"en-US", // locale
+			&m_textFormat
+		)
 	);
-	//);
 
-	// Center the text horizontally.
-	//DX::ThrowIfFailed(
-	m_textFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
-	//);
+	//Center the text horizontally.
+	DX::ThrowIfFailed(
+		m_textFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER)
+	);
 
-	// Center the text vertically.
-	//DX::ThrowIfFailed(
-	m_textFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
-	//);
+	//Center the text vertically.
+	DX::ThrowIfFailed(
+		m_textFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER)
+	);
 }
 
 void App::CreateDeviceResources() {
@@ -65,7 +68,7 @@ void App::CreateDeviceResources() {
 		m_d2dContext.Get(),
 		m_wicFactory.Get(),
 		m_dwriteFactory.Get(),
-		"DirectWrite Hello World sample"
+		L"Matrix Code Rain"
 	);
 
 	DX::ThrowIfFailed(
@@ -74,12 +77,16 @@ void App::CreateDeviceResources() {
 			&m_blackBrush
 		)
 	);
+
+	DX::ThrowIfFailed(
+		m_d2dContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Green), &m_greenBrush)
+	);
 }
 
 void App::CreateWindowSizeDependentResources() {
 	DirectXBase::CreateWindowSizeDependentResources();
 
-	Platform::String^ text = "Hello World From ... DirectWrite!";
+	Platform::String^ text = L"ｦｦｦｦasdbAA";
 
 	D2D1_SIZE_F size = m_d2dContext->GetSize();
 
@@ -148,13 +155,13 @@ void App::CreateWindowSizeDependentResources() {
 void App::Render() {
 	m_d2dContext->BeginDraw();
 
-	m_d2dContext->Clear(D2D1::ColorF(D2D1::ColorF::CornflowerBlue));
+	m_d2dContext->Clear(D2D1::ColorF(D2D1::ColorF::Black));
 	m_d2dContext->SetTransform(D2D1::Matrix3x2F::Identity());
 
 	m_d2dContext->DrawTextLayout(
 		D2D1::Point2F(0.0f, 0.0f),
 		m_textLayout.Get(),
-		m_blackBrush.Get()
+		m_greenBrush.Get()
 	);
 
 	// We ignore D2DERR_RECREATE_TARGET here. This error indicates that the device
@@ -206,11 +213,28 @@ void App::Load(
 	_In_ Platform::String^ entryPoint
 ) {}
 
-void App::Run() {
-	Render();
-	Present();
+void App::Update() {
+	m_timer.Tick([&]() {m_sampleText += 1; });
+}
 
-	m_window->Dispatcher->ProcessEvents(CoreProcessEventsOption::ProcessUntilQuit);
+void App::Run() {
+
+	while (!m_windowClosed) {
+		if (m_windowVisible) {
+			CoreWindow::GetForCurrentThread()->Dispatcher->ProcessEvents(CoreProcessEventsOption::ProcessAllIfPresent);
+			Update();
+			Render();
+			Present();
+		}
+		else {
+			CoreWindow::GetForCurrentThread()->Dispatcher->ProcessEvents(CoreProcessEventsOption::ProcessOneAndAllPending);
+		}
+	}
+
+	//Render();
+	//Present();
+
+	//m_window->Dispatcher->ProcessEvents(CoreProcessEventsOption::ProcessUntilQuit);
 }
 
 void App::Uninitialize() {}
