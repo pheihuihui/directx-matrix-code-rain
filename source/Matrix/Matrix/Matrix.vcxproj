@@ -27,15 +27,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{c3fdc959-cb19-4ff7-aaab-f46ead05cefe}</ProjectGuid>
+    <ProjectGuid>{c100f8b6-e19a-456d-9a9e-d14e68f45f1d}</ProjectGuid>
     <Keyword>DirectXApp</Keyword>
-    <RootNamespace>App11DX</RootNamespace>
+    <RootNamespace>Matrix</RootNamespace>
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.15063.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformMinVersion>10.0.17134.0</WindowsTargetPlatformMinVersion>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -101,7 +101,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <PackageCertificateKeyFile>App11DX_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>Matrix_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <Link>
@@ -195,27 +195,21 @@
     <Image Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Image Include="Assets\StoreLogo.png" />
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
-    <Image Include="Assets\windowsbig-sdk.png" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="CodeRain.h" />
     <ClInclude Include="Common\DeviceResources.h" />
+    <ClInclude Include="MatrixMain.h" />
     <ClInclude Include="Common\DirectXHelper.h" />
     <ClInclude Include="Common\StepTimer.h" />
-    <ClInclude Include="Content\Sample3DSceneRenderer.h" />
-    <ClInclude Include="Content\SampleFpsTextRenderer.h" />
-    <ClInclude Include="Content\ShaderStructures.h" />
-    <ClInclude Include="DirectXBase.h" />
-    <ClInclude Include="DirectXSample.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="SampleOverlay.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="CodeRain.cpp" />
     <ClCompile Include="Common\DeviceResources.cpp" />
-    <ClCompile Include="Content\SampleFpsTextRenderer.cpp" />
-    <ClCompile Include="Content\Sample3DSceneRenderer.cpp" />
-    <ClCompile Include="DirectXBase.cpp" />
+    <ClCompile Include="MatrixMain.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -224,21 +218,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="SampleOverlay.cpp" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="App11DX_TemporaryKey.pfx" />
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Content\SamplePixelShader.hlsl">
-      <ShaderType>Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Content\SampleVertexShader.hlsl">
-      <ShaderType>Vertex</ShaderType>
-    </FxCompile>
+    <None Include="Matrix_TemporaryKey.pfx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,13 +2,11 @@
 
 #include "pch.h"
 #include "Common\DeviceResources.h"
-#include "DX11SampleMain.h"
+#include "MatrixMain.h"
 
-namespace DX11Sample
-{
+namespace Matrix {
 	// 我们的应用程序的主入口点。使用 Windows shell 连接应用程序并处理应用程序生命周期事件。
-	ref class App sealed : public Windows::ApplicationModel::Core::IFrameworkView
-	{
+	ref class App sealed : public Windows::ApplicationModel::Core::IFrameworkView {
 	public:
 		App();
 
@@ -37,14 +35,13 @@ namespace DX11Sample
 
 	private:
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
-		std::unique_ptr<DX11SampleMain> m_main;
+		std::unique_ptr<MatrixMain> m_main;
 		bool m_windowClosed;
 		bool m_windowVisible;
 	};
 }
 
-ref class Direct3DApplicationSource sealed : Windows::ApplicationModel::Core::IFrameworkViewSource
-{
+ref class Direct3DApplicationSource sealed : Windows::ApplicationModel::Core::IFrameworkViewSource {
 public:
 	virtual Windows::ApplicationModel::Core::IFrameworkView^ CreateView();
 };

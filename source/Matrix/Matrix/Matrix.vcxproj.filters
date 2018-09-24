@@ -2,14 +2,14 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="通用">
-      <UniqueIdentifier>c3fdc959-cb19-4ff7-aaab-f46ead05cefe</UniqueIdentifier>
+      <UniqueIdentifier>c100f8b6-e19a-456d-9a9e-d14e68f45f1d</UniqueIdentifier>
     </Filter>
     <Filter Include="资产">
-      <UniqueIdentifier>de3292b8-f52d-4b9f-ae69-314cf0dcdb09</UniqueIdentifier>
+      <UniqueIdentifier>6afbff48-203d-431b-aa5d-97cccd8c61ae</UniqueIdentifier>
       <Extensions>bmp;fbx;gif;jpg;jpeg;tga;tiff;tif;png</Extensions>
     </Filter>
     <Filter Include="内容">
-      <UniqueIdentifier>3069ac25-8034-4c40-bd20-f2b0d944355a</UniqueIdentifier>
+      <UniqueIdentifier>2bc7b0ef-88dc-4cf6-9ef6-2cf155a7713b</UniqueIdentifier>
     </Filter>
     <ClInclude Include="Common\DirectXHelper.h">
       <Filter>通用</Filter>
@@ -23,27 +23,6 @@
     <ClCompile Include="Common\DeviceResources.cpp">
       <Filter>通用</Filter>
     </ClCompile>
-    <ClInclude Include="Content\Sample3DSceneRenderer.h">
-      <Filter>内容</Filter>
-    </ClInclude>
-    <ClInclude Include="Content\SampleFpsTextRenderer.h">
-      <Filter>内容</Filter>
-    </ClInclude>
-    <ClInclude Include="Content\ShaderStructures.h">
-      <Filter>内容</Filter>
-    </ClInclude>
-    <ClCompile Include="Content\Sample3DSceneRenderer.cpp">
-      <Filter>内容</Filter>
-    </ClCompile>
-    <ClCompile Include="Content\SampleFpsTextRenderer.cpp">
-      <Filter>内容</Filter>
-    </ClCompile>
-    <FxCompile Include="Content\SamplePixelShader.hlsl">
-      <Filter>内容</Filter>
-    </FxCompile>
-    <FxCompile Include="Content\SampleVertexShader.hlsl">
-      <Filter>内容</Filter>
-    </FxCompile>
     <Image Include="Assets\LockScreenLogo.scale-200.png">
       <Filter>资产</Filter>
     </Image>
@@ -62,38 +41,25 @@
     <Image Include="Assets\Wide310x150Logo.scale-200.png">
       <Filter>资产</Filter>
     </Image>
-    <Filter Include="DWrite">
-      <UniqueIdentifier>{daf998e0-6b90-411a-8792-201ee179da6c}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="MatrixMain.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="DirectXBase.cpp">
-      <Filter>DWrite</Filter>
-    </ClCompile>
-    <ClCompile Include="SampleOverlay.cpp">
-      <Filter>DWrite</Filter>
+    <ClCompile Include="CodeRain.cpp">
+      <Filter>内容</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="MatrixMain.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="DirectXSample.h">
-      <Filter>DWrite</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXBase.h">
-      <Filter>DWrite</Filter>
-    </ClInclude>
-    <ClInclude Include="SampleOverlay.h">
-      <Filter>DWrite</Filter>
+    <ClInclude Include="CodeRain.h">
+      <Filter>内容</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">
-      <Filter>资产</Filter>
-    </Image>
-    <Image Include="Assets\windowsbig-sdk.png">
       <Filter>资产</Filter>
     </Image>
   </ItemGroup>
@@ -101,6 +67,6 @@
     <AppxManifest Include="Package.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App11DX_TemporaryKey.pfx" />
+    <None Include="Matrix_TemporaryKey.pfx" />
   </ItemGroup>
 </Project>

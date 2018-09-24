@@ -7,14 +7,14 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="de7da5a1-bfcb-4589-bf44-7b1343103512"
+    Name="56180607-b3da-458c-9680-030132e118ef"
     Publisher="CN=optim"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="de7da5a1-bfcb-4589-bf44-7b1343103512" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="56180607-b3da-458c-9680-030132e118ef" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>DX11Sample</DisplayName>
+    <DisplayName>Matrix</DisplayName>
     <PublisherDisplayName>optim</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -30,12 +30,12 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="DX11Sample.App">
+      EntryPoint="Matrix.App">
       <uap:VisualElements
-        DisplayName="DX11Sample"
+        DisplayName="Matrix"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="DX11Sample"
+        Description="Matrix"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
