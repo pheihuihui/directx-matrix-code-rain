@@ -2,6 +2,7 @@
 #include "CodeRain.h"
 #include <stdlib.h>
 #include "Common/DirectXHelper.h"
+#include <vector>
 
 using namespace Matrix;
 using namespace Microsoft::WRL;
@@ -107,3 +108,23 @@ void Matrix::CodeRain::Render() {
 
 	context->RestoreDrawingState(m_stateBlock.Get());
 }
+
+Matrix::RainDrop::RainDrop(UINT height, Microsoft::WRL::ComPtr<ID2D1SolidColorBrush> head, std::vector<Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>>& tail, UINT time) {
+	totHeight = height;
+	headBrush = head;
+	tailBrushes = tail;
+	nextDropTime = time;
+	actHeight = 0;
+}
+
+void Matrix::RainDrop::getNextRainDrop() {
+	if (actHeight == 0) {
+		if (rand() % nextDropTime != 0)
+			initRainDrop();
+	}
+}
+
+void Matrix::RainDrop::initRainDrop() {
+
+}
+
