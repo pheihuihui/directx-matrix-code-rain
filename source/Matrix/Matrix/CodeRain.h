@@ -21,15 +21,15 @@ namespace Matrix {
 		float	m_fontSize;
 		
 		std::shared_ptr<DX::DeviceResources>						m_deviceResources;
-		std::wstring												m_charSet;
-		uint32														m_charSetLength;
-		std::vector<std::wstring>									m_textLines;
-		DWRITE_TEXT_METRICS											m_textMetrics;
-		Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>				m_blackBrush;
-		Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>				m_whiteBrush;
-		std::vector<Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>>	m_greenBrushes;
-		Microsoft::WRL::ComPtr<ID2D1DrawingStateBlock1>				m_stateBlock;
-		std::vector<Microsoft::WRL::ComPtr<IDWriteTextLayout3>>		m_multipleLinesTextLayout;
+		std::wstring									m_charSet;
+		uint32										m_charSetLength;
+		std::vector<std::wstring>							m_textLines;
+		DWRITE_TEXT_METRICS								m_textMetrics;
+		Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>					m_blackBrush;
+		Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>					m_whiteBrush;
+		std::vector<Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>>			m_greenBrushes;
+		Microsoft::WRL::ComPtr<ID2D1DrawingStateBlock1>					m_stateBlock;
+		std::vector<Microsoft::WRL::ComPtr<IDWriteTextLayout3>>				m_multipleLinesTextLayout;
 		Microsoft::WRL::ComPtr<IDWriteTextFormat2>					m_textFormat;
 	};
 
