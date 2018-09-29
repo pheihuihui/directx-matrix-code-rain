@@ -3,25 +3,29 @@
 #include <stdlib.h>
 #include "Common/DirectXHelper.h"
 #include <vector>
+#include "RainDrop.h"
+
 
 using namespace Matrix;
 using namespace Microsoft::WRL;
 
-Matrix::CodeRain::CodeRain(const std::shared_ptr<DX::DeviceResources>& deviceResources) :
-	m_deviceResources(deviceResources),
-	m_fontSize(16.0f),
-	m_charSet(L"QWERTYUIOPASDFGHJKLZXCVBNM1234567890!@#$%^&*()_+-=,.<>;:[]{}?"),
-	m_charSetLength(m_charSet.size()),
-	m_chanceCount(100)
+Matrix::CodeRain::CodeRain(const std::shared_ptr<DX::DeviceResources>& deviceResources)
 {
+	m_deviceResources = deviceResources;
+	m_fontSize = 16.0f;
+	m_charSet = L"QWERTYUIOPASDFGHJKLZXCVBNM1234567890!@#$%^&*()_+-=,.<>;:[]{}?";
+	m_charSetLength = m_charSet.size();
+	m_chanceCount = 200;
+
 	ZeroMemory(&m_textMetrics, sizeof(DWRITE_TEXT_METRICS));
-	m_columnCount = 16;
-	m_lineCount = 9;
+	m_columnCount = 32;
+	m_lineCount = 18;
 
 	for (UINT i = 0; i < m_columnCount; i++) {
 		std::wstring tmp;
 		for (UINT j = 0; j < m_lineCount; j++) {
-			tmp.push_back(m_charSet[rand() % m_charSetLength]);
+			int index = rand() % m_charSetLength;
+			tmp.push_back(m_charSet[index]);
 		}
 		m_textLines.push_back(tmp);
 	}
@@ -42,6 +46,11 @@ Matrix::CodeRain::CodeRain(const std::shared_ptr<DX::DeviceResources>& deviceRes
 	m_textFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT::DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
 	m_deviceResources->GetD2DFactory()->CreateDrawingStateBlock(&m_stateBlock);
 	CreateDeviceDependentResources();
+
+	for (UINT i = 0; i < m_columnCount; i++) {
+		std::shared_ptr<RainDrop> singleDrop = std::make_shared<RainDrop>(m_lineCount, m_whiteBrush.Get(), m_greenBrushes);
+		m_rainDrops.push_back(singleDrop);
+	}
 }
 
 void Matrix::CodeRain::CreateDeviceDependentResources() {
@@ -78,6 +87,9 @@ void Matrix::CodeRain::Update(DX::StepTimer const & timer) {
 		textLayout.As(&m_multipleLinesTextLayout[i]);
 		m_multipleLinesTextLayout[i]->GetMetrics(&m_textMetrics);
 	}
+
+	for (auto a = m_rainDrops.begin(); a != m_rainDrops.end(); a++)
+		(*a)->GetNextDrop();
 }
 
 void Matrix::CodeRain::Render() {
@@ -92,12 +104,11 @@ void Matrix::CodeRain::Render() {
 	m_textFormat->SetReadingDirection(DWRITE_READING_DIRECTION::DWRITE_READING_DIRECTION_LEFT_TO_RIGHT);
 	m_textFormat->SetFlowDirection(DWRITE_FLOW_DIRECTION::DWRITE_FLOW_DIRECTION_TOP_TO_BOTTOM);
 
-	//context->DrawTextLayout(D2D1::Point2F(10.f, 10.f), m_textLayout.Get(), m_greenBrush.Get());
-	DWRITE_TEXT_RANGE white_range = { 2, 10 };
-	DWRITE_TEXT_RANGE green_range = { 0, 2 };
+	//for (auto a = m_multipleLinesTextLayout.begin(); a != m_multipleLinesTextLayout.end(); a++)
+	//	StartRaining(*a, );
+	for (int i = 0; i < 5; i++)
+		StartRaining(m_multipleLinesTextLayout[i], m_rainDrops[i]);
 
-	m_multipleLinesTextLayout[2].Get()->SetDrawingEffect(m_whiteBrush.Get(), white_range);
-	m_multipleLinesTextLayout[2].Get()->SetDrawingEffect(m_greenBrushes[40].Get(), green_range);
 	for (UINT i = 0; i < m_columnCount; i++)
 		context->DrawTextLayout(D2D1::Point2F(16.0f * i, 10.0f), m_multipleLinesTextLayout[i].Get(), m_greenBrushes[10].Get());
 
@@ -109,22 +120,7 @@ void Matrix::CodeRain::Render() {
 	context->RestoreDrawingState(m_stateBlock.Get());
 }
 
-Matrix::RainDrop::RainDrop(UINT height, Microsoft::WRL::ComPtr<ID2D1SolidColorBrush> head, std::vector<Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>>& tail, UINT time) {
-	totHeight = height;
-	headBrush = head;
-	tailBrushes = tail;
-	nextDropTime = time;
-	actHeight = 0;
+void Matrix::CodeRain::StartRaining(Microsoft::WRL::ComPtr<IDWriteTextLayout3> layout, std::shared_ptr<RainDrop> rdrop) {
+	for (auto a = rdrop->brushesMap.begin(); a != rdrop->brushesMap.end(); a++)
+		layout.Get()->SetDrawingEffect(a->second.second.Get(), a->second.first);
 }
-
-void Matrix::RainDrop::getNextRainDrop() {
-	if (actHeight == 0) {
-		if (rand() % nextDropTime != 0)
-			initRainDrop();
-	}
-}
-
-void Matrix::RainDrop::initRainDrop() {
-
-}
-

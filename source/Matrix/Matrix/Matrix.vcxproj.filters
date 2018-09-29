@@ -49,12 +49,18 @@
     <ClCompile Include="CodeRain.cpp">
       <Filter>内容</Filter>
     </ClCompile>
+    <ClCompile Include="RainDrop.cpp">
+      <Filter>内容</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="MatrixMain.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="CodeRain.h">
+      <Filter>内容</Filter>
+    </ClInclude>
+    <ClInclude Include="RainDrop.h">
       <Filter>内容</Filter>
     </ClInclude>
   </ItemGroup>
