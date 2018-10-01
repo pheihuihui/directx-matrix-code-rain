@@ -9,11 +9,13 @@ Matrix::RainDrop::RainDrop(UINT length, ComPtr<ID2D1SolidColorBrush> head, std::
 	initChance = 100;
 	started = false;
 	dropLength = length;
-	UINT min = 5;
-	UINT max = length / 2 > min ? length / 2 : 5;
-	actualLength = rand() % (max - min) + min;
-	startIndex = -1;
-	endIndex = startIndex - actualLength;
+	rainSpeedCount = 0;
+
+	int speedMin = 3;
+	int speedMax = 10;
+	rainSpeed = rand() % (speedMax - speedMin) + speedMin;
+
+	FinishDrop();
 }
 
 void Matrix::RainDrop::GetNextDrop() {
@@ -24,18 +26,51 @@ void Matrix::RainDrop::GetNextDrop() {
 		}
 	}
 	else {
-		if (rand() % initChance == 0) {
-			brushesMap[0].first.startPosition += 1;
+		UINT tmp = brushesMap.begin()->second.first.startPosition;
+		if (tmp > dropLength && tmp < 1000) {
+			FinishDrop();
+			return;
+		}
+		else {
+			updateMap();
 		}
 	}
 }
 
 void Matrix::RainDrop::InitDrop() {
-	startIndex = 0;
-	endIndex = startIndex - actualLength;
+	int tmpMin = 5;
+	int tmpMax = (dropLength * 2 / 3);
+	actualLength = rand() % (tmpMax - tmpMin) + tmpMin;
+	for (UINT i = 0; i < actualLength; i++) {
+		DWRITE_TEXT_RANGE tmpRange = {i - actualLength, 1};
+		int tmpIndex = int((float)i * dropLength / actualLength);
+		ComPtr<ID2D1SolidColorBrush> tmpBrush = dropBrushes[tmpIndex];
+		std::pair<DWRITE_TEXT_RANGE, ComPtr<ID2D1SolidColorBrush>> tmpPair = std::make_pair(tmpRange, tmpBrush);
+		brushesMap.insert(std::make_pair(i, tmpPair));
+	}
+	DWRITE_TEXT_RANGE headRange = { 0, 1 };
+	std::pair<DWRITE_TEXT_RANGE, ComPtr<ID2D1SolidColorBrush>> headPair = std::make_pair(headRange, headBrush);
+	brushesMap.insert(std::make_pair(actualLength, headPair));
 	started = true;
-	
-	DWRITE_TEXT_RANGE tmpRange = {0, 1};
-	std::pair<DWRITE_TEXT_RANGE, ComPtr<ID2D1SolidColorBrush>> tmpPair = std::make_pair(tmpRange, headBrush);
-	brushesMap.insert(std::make_pair(tmpPair.first.startPosition, tmpPair));
+}
+
+void Matrix::RainDrop::FinishDrop() {
+	started = false;
+	startIndex = -1;
+	endIndex = -1;
+	headIndex = -1;
+	actualLength = 0;
+	brushesMap.clear();
+	dropRanges.clear();
+}
+
+void Matrix::RainDrop::updateMap() {
+	rainSpeedCount += 1;
+	for (auto a = brushesMap.begin(); a != brushesMap.end(); a++) {
+		if (rainSpeedCount == rainSpeed) {
+			a->second.first.startPosition += 1;
+		}
+	}
+	if (rainSpeedCount == rainSpeed)
+		rainSpeedCount = 0;
 }

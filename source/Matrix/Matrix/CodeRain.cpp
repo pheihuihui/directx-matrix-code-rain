@@ -15,11 +15,11 @@ Matrix::CodeRain::CodeRain(const std::shared_ptr<DX::DeviceResources>& deviceRes
 	m_fontSize = 16.0f;
 	m_charSet = L"QWERTYUIOPASDFGHJKLZXCVBNM1234567890!@#$%^&*()_+-=,.<>;:[]{}?";
 	m_charSetLength = m_charSet.size();
-	m_chanceCount = 200;
+	m_chanceCount = 100;
 
 	ZeroMemory(&m_textMetrics, sizeof(DWRITE_TEXT_METRICS));
-	m_columnCount = 32;
-	m_lineCount = 18;
+	m_columnCount = 100;
+	m_lineCount = 50;
 
 	for (UINT i = 0; i < m_columnCount; i++) {
 		std::wstring tmp;
@@ -106,11 +106,11 @@ void Matrix::CodeRain::Render() {
 
 	//for (auto a = m_multipleLinesTextLayout.begin(); a != m_multipleLinesTextLayout.end(); a++)
 	//	StartRaining(*a, );
-	for (int i = 0; i < 5; i++)
+	for (UINT i = 0; i < m_columnCount; i++)
 		StartRaining(m_multipleLinesTextLayout[i], m_rainDrops[i]);
 
 	for (UINT i = 0; i < m_columnCount; i++)
-		context->DrawTextLayout(D2D1::Point2F(16.0f * i, 10.0f), m_multipleLinesTextLayout[i].Get(), m_greenBrushes[10].Get());
+		context->DrawTextLayout(D2D1::Point2F(16.0f * i, 10.0f), m_multipleLinesTextLayout[i].Get(), m_blackBrush.Get());
 
 	HRESULT hr = context->EndDraw();
 	if (hr != D2DERR_RECREATE_TARGET) {
